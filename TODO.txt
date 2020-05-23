@@ -1,0 +1,2 @@
+1-skin segmentation(done)
+2-face detection by viola jones
