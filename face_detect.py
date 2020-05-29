@@ -1,3 +1,7 @@
+''' usage :
+1- python3 face_detect.py -v videos/test1.mkv
+2- python3 face_detect.py -i images/img3.jpg
+'''
 import argparse as arg
 import time
 import cv2
@@ -24,6 +28,10 @@ class Face_Detector():
 		skin_img = self._skin_detect.RGB_H_CbCr(img,False)
 
 		contours, hierarchy = cv2.findContours(skin_img, cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+		#cv2	.drawContours(img, contours, -1, (0,255,0), 1)
+		#cv2.imshow("faces",img)
+		#if cv2.waitKey(0) & 0xFF == ord("q"):
+		#	sys.exit(0)
 		rects = []
 		for c in contours:
 			# get the bounding rect
@@ -48,6 +56,9 @@ class Face_Detector():
 			(grabbed, img) = vid.read()
 			if not grabbed:
 				break
+			#get the frame rate
+			fps = vid.get(cv2.CAP_PROP_FPS)
+			print("\nRecording at {} frame/sec".format(fps))
 			Image = cv2.resize(img, (0, 0), fx=1/scale_factor, fy=1/scale_factor)
 			rects = self.Detect_Face_Img(Image,size1,size2)
 			for i,r in enumerate(rects):
@@ -60,12 +71,11 @@ class Face_Detector():
 				cv2.rectangle(img, (x0,y0),(x0+w,y0+h),(0,255,0),1)
 				font = cv2.FONT_HERSHEY_SIMPLEX
 			stop = time.time()
-			# f = 60 frame/sec
-			# T = 1/60 sec/frame
-			# T = 0.01667
-			# T = 2*T = 0.032
+			# f = 30 frame/sec
+			# T = 1/30 sec/frame
+			# T = 0.032
 			#frame = cv2.resize(frame, dim, interpolation =  cv2.INTER_AREA)
-			time.sleep(abs((0.032 - (stop - start))))
+			time.sleep(abs((1/fps - (stop - start))))
 			cv2.imshow('faces', img)
 			if cv2.waitKey(1) & 0xFF == ord("q"):
 				break
@@ -94,8 +104,8 @@ if __name__ == "__main__":
 		sys.exit(0)
 	in_arg = Arg_Parser()
 	skin_detect = Skin_Detect()
-	size1 = (25,50)
-	size2 = (98,90)
+	size1 = (25,47)
+	size2 = (90,90)
 	scale_factor = 3
 	Face_Detect = Face_Detector(skin_detect)
 	if in_arg["image"] != None:
