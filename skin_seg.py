@@ -270,4 +270,6 @@ if __name__ == "__main__":
 	plt.show()
 	cv2.waitKey(0)
 
-
+	"""TODO
+	Detect face using this method
+	"""

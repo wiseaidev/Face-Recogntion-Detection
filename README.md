@@ -1,2 +1,2 @@
-# Skin_Threshold
-this project implements a face detection algorithm using viola jones method and traking specific persons based on skin segmentation algorithm.
+# Face_Detection
+This project implements a face detection algorithm using skin segmentation RGB-YCrCb-HSV.
