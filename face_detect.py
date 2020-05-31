@@ -26,7 +26,6 @@ class Face_Detector():
 		'''
 		#get the RGB_H_CbCr representation of the image(for more info, please refer to skin_seg.py)
 		skin_img = self._skin_detect.RGB_H_CbCr(img,False)
-
 		contours, hierarchy = cv2.findContours(skin_img, cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 		#cv2	.drawContours(img, contours, -1, (0,255,0), 1)
 		#cv2.imshow("faces",img)
@@ -38,8 +37,13 @@ class Face_Detector():
 			x, y, w, h = cv2.boundingRect(c)
 			# draw a green rectangle to visualize the bounding rect
 			if (w > size1[0] and h > size1[1]) and (w < size2[0] and h < size2[1]):
+				#pinhole distance
+				Distance1 = 11.5*(img.shape[1]/float(w))
+				#camera distance
+				Distance2 = 15.0*((img.shape[1] + 226.8)/float(w))
+				print("\npinhole distance = {:.2f} cm\ncamera distance = {:.2f} cm".format(Distance1,Distance2))
 				print("Width = {} \t Height = {}".format(w,h))
-				rects.append(np.asarray([x,y,w,h], dtype=np.uint16))
+				rects.append(np.asarray([x,y,w,w*1.25], dtype=np.uint16))
 		return rects
 	def Detect_Face_Vid(self,vid,size1,size2,scale_factor = 3):
 		'''this method implements the skin detection algorithm to perform a face detection in a given video file.
@@ -104,8 +108,8 @@ if __name__ == "__main__":
 		sys.exit(0)
 	in_arg = Arg_Parser()
 	skin_detect = Skin_Detect()
-	size1 = (25,47)
-	size2 = (90,90)
+	size1 = (50,50 )
+	size2 = (100,70)
 	scale_factor = 3
 	Face_Detect = Face_Detector(skin_detect)
 	if in_arg["image"] != None:
