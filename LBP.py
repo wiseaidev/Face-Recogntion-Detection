@@ -214,9 +214,6 @@ class Fast_LBP():
 			#Update the result matrix.
 			v = 2**i
 			result += D*v
-			cv2.imshow('faces', result)
-			if cv2.waitKey(800) & 0xFF == ord("q"):
-				pass
 		return result.astype(np.uint8)
 
 class LBP_sklearn:
@@ -295,6 +292,5 @@ if __name__ == "__main__":
 	axs[0][1].set_title('GrayScale Image', fontdict={'fontsize': 15, 'fontweight': 'medium'})
 	axs[0][1].axis('off')
 	hist = lbp.compute(gray)
-	# extract the label from the image path, then update the
 
 	plt.show()
