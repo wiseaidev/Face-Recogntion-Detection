@@ -108,8 +108,8 @@ if __name__ == "__main__":
 		sys.exit(0)
 	in_arg = Arg_Parser()
 	skin_detect = Skin_Detect()
-	size1 = (50,50 )
-	size2 = (100,70)
+	size1 = (40,40)
+	size2 = (300,400)
 	scale_factor = 3
 	Face_Detect = Face_Detector(skin_detect)
 	if in_arg["image"] != None:
