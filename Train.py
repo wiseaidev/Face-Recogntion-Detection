@@ -199,10 +199,12 @@ if __name__ == "__main__":
 		#Training the model
 		model.train(dataset_name,file_name)
 	if Arg_list["camera"] != None :
-		camera = cv2.VideoCapture(Arg_list["camera"])
+		camera = cv2.VideoCapture(eval(Arg_list["camera"]))
 		camera.set(3, 640)
 		camera.set(4, 480)
-
+		model.create_dataset(samples,camera,dataset_name)
+		#Training the model
+		model.train(dataset_name,file_name)
 
 
 

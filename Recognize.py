@@ -121,6 +121,7 @@ if __name__ == "__main__":
         #create a dataset for further model training
         model.predict(video,Face_Detect,size1,size2)
     if Arg_list["camera"] != None :
-        camera = cv2.VideoCapture(Arg_list["camera"])
+        camera = cv2.VideoCapture(eval(Arg_list["camera"]))
         camera.set(3, 640)
         camera.set(4, 480)
+        model.predict(camera,Face_Detect,size1,size2)
