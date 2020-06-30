@@ -67,7 +67,7 @@ class Recognizer():
             #gray = cv2.equalizeHist(gray)
             gray = cv2.resize(gray, (0,0), fx=1/3, fy=1/3)
             cv2.imshow('video',gray1)
-            faces = self._Face_Cascade.detectMultiScale(gray,scaleFactor=1.0985,minNeighbors=8,minSize=(30, 30))
+            faces = self._Face_Cascade.detectMultiScale(gray,scaleFactor=1.05,minNeighbors=4,minSize=(30, 30))
             if len(faces) == 0 :
                 img1 = cv2.resize(img, (0,0), fx=1/3, fy=1/3)
                 faces = Face_Detect.Detect_Face_Img(img1,size1,size2)
@@ -76,7 +76,7 @@ class Recognizer():
                 x,y,w,h = face*3
                 id1, conf = self._Recognizer.predict(gray1[y:y + h, x:x + w])
                 # Check that the face is recognized
-                if (conf >110): 
+                if (conf >100): 
                     self.DispID(face*3, self.Get_UserName(0, conf), img) 
                 else:
                     self.DispID(face*3, self.Get_UserName(id1, conf), img)   
