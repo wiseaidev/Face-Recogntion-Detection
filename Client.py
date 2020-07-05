@@ -1,3 +1,6 @@
+''' usage :
+python3 Client.py -v videos/video3.mkv
+'''
 import socket
 import numpy as np
 import cv2

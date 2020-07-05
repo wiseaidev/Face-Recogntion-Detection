@@ -1,3 +1,6 @@
+''' usage :
+python3 Server.py
+'''
 import numpy as np
 import cv2
 # Import the socket library
