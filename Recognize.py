@@ -51,40 +51,29 @@ class Recognizer():
         if not ID > 0:
             return " Unknown "
         return self.FileRead()[ID -1]     
-    def predict(self,cam,skin_face_detector,size1,size2):
-        # iniciate id counter
-        id = 0
-        # List of names for id
-        names = self.FileRead()
-        while True:
-            ret, img = cam.read()
-            if img is None:
-                print("[INFO] Reaching the end of the video")
-                print("[INFO] Exiting...") 
-                break
-            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            gray1 = gray.copy()
-            #gray = cv2.equalizeHist(gray)
-            gray = cv2.resize(gray, (0,0), fx=1/3, fy=1/3)
-            cv2.imshow('video',gray1)
-            faces = self._Face_Cascade.detectMultiScale(gray,scaleFactor=1.05,minNeighbors=4,minSize=(30, 30))
-            if len(faces) == 0 :
-                img1 = cv2.resize(img, (0,0), fx=1/3, fy=1/3)
-                faces = Face_Detect.Detect_Face_Img(img1,size1,size2)
-            for _,face in enumerate(faces):
-                self.Draw_Rect(img, face*3, [0,255,0])
-                x,y,w,h = face*3
-                id1, conf = self._Recognizer.predict(gray1[y:y + h, x:x + w])
+    def predict(self,img,skin_face_detector,size1,size2):
+        if img is None:
+            print("[INFO] Reaching the end of the video")
+            print("[INFO] Exiting...") 
+            return
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        gray1 = gray.copy()
+        #gray = cv2.equalizeHist(gray)
+        gray = cv2.resize(gray, (0,0), fx=1/3, fy=1/3)
+        faces = self._Face_Cascade.detectMultiScale(gray,scaleFactor=1.05,minNeighbors=4,minSize=(30, 30))
+        if len(faces) == 0 :
+            img1 = cv2.resize(img, (0,0), fx=1/3, fy=1/3)
+            faces = skin_face_detector.Detect_Face_Img(img1,size1,size2)
+        for _,face in enumerate(faces):
+            self.Draw_Rect(img, face*3, [0,255,0])
+            x,y,w,h = face*3
+            id1, conf = self._Recognizer.predict(gray1[y:y + h, x:x + w])
                 # Check that the face is recognized
-                if (conf >100): 
-                    self.DispID(face*3, self.Get_UserName(0, conf), img) 
-                else:
-                    self.DispID(face*3, self.Get_UserName(id1, conf), img)   
-            cv2.imshow('video', img)
-            k = cv2.waitKey(10) & 0xff  # 'ESC' for Exit
-            if k == 27:
-                break
-        cv2.destroyAllWindows()
+            if (conf >100): 
+                self.DispID(face*3, self.Get_UserName(0, conf), img) 
+            else:
+                self.DispID(face*3, self.Get_UserName(id1, conf), img)   
+        return img
 def Arg_Parse():
     Arg_Par = arg.ArgumentParser()
     Arg_Par.add_argument("-v", "--video",
@@ -118,8 +107,14 @@ if __name__ == "__main__":
     model = Recognizer(face_cascade,file_name,var)
     if Arg_list["video"] != None :
         video = cv2.VideoCapture(Arg_list["video"])
-        #create a dataset for further model training
-        model.predict(video,Face_Detect,size1,size2)
+        while True:
+            ret, img = video.read()
+            predicted = model.predict(img,Face_Detect,size1,size2)
+            cv2.imshow('video', predicted)
+            k = cv2.waitKey(10) & 0xff  # 'ESC' for Exit
+            if k == 27 or predicted is None:
+                break
+        cv2.destroyAllWindows()
     if Arg_list["camera"] != None :
         camera = cv2.VideoCapture(eval(Arg_list["camera"])) 
         camera.set(3, 640)
