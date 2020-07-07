@@ -57,9 +57,11 @@ if __name__ == "__main__":
 		struct_size = struct.calcsize("l")
 		#print("\n[*] Struct Size: ",struct_size)
 		img_size= Client_Socket.recv(struct_size)
+		#print(img_size.hex())
 		# struct.unpack retrun a tuple 
 		img_size = struct.unpack("l", img_size)[0]
 		#print("\n[*] Message Size : {}".format(img_size))
+		print(img_size)
 		while len(data) < img_size:
 			data += Client_Socket.recv(CHUNK_SIZE)
 			#print("\n[*] Receiving ",len(data))
@@ -68,7 +70,7 @@ if __name__ == "__main__":
 		frame=pickle.loads(frame_data)
 		frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
 		cv2.imshow('Video', frame)	
-		if cv2.waitKey (1) & 0xff == 27: #To exit the program, press "Esc", wait 100 ms,
+		if cv2.waitKey (1) & 0xff == 27: #To exit the program, press "Esc", wait 1 ms,
 				break
 
 

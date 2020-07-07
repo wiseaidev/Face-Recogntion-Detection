@@ -47,7 +47,7 @@ class Recognizer():
         cv2.rectangle(Image, pt1, pt2, (0,0,255), 1) 
         cv2.putText(Image, NAME ,pt3 , cv2.FONT_HERSHEY_PLAIN, 1.1, (0,0,255))  
     def Get_UserName(self,ID, conf):
-        print("[INFO] Confidence: " + "{:.2f} ".format(conf))
+        #print("[INFO] Confidence: " + "{:.2f} ".format(conf))
         if not ID > 0:
             return " Unknown "
         return self.FileRead()[ID -1]     
