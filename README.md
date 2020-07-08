@@ -6,6 +6,7 @@ For more information about :
 	<li> Haar Cascade Classifiers in OpenCV Explained Visually, Please Click <a href="https://medium.com/swlh/haar-cascade-classifiers-in-opencv-explained-visually-f608086fc42c"><b>Here</b></a></li>
 	<li> Local Binary Pattern Algorithm, Please Click <a href="https://medium.com/swlh/local-binary-pattern-algorithm-the-math-behind-it-%EF%B8%8F-edf7b0e1c8b3"><b>Here</b></a></li>
 	<li> Face Detection Using Skin Tone Threshold(RGB-YCrCb), Please Click <a href="https://medium.com/swlh/face-detection-using-skin-tone-threshold-rgb-ycrcb-python-implementation-2d4f62d376f1"><b>Here</b></a></li>
+	<li> Face Recognition, Socket Programming, And Multithreading In Python, Please Click <a href="https://medium.com/@mahmoudharmouch/face-recognition-socket-programming-and-multithreading-in-python-6f9717fa2864"><b>Here</b></a></li>
 </ul>
 
 
